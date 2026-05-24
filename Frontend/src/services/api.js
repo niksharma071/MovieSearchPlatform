@@ -44,11 +44,11 @@ export const getCurrentUser = () =>
 export const logoutUser = () =>
   api.post('/auth/logout');
 
-export const getWishlist = () =>
-  api.get('/auth/wishlist');
+export const getWatchlist = () =>
+  api.get('/auth/watchlist');
 
-export const addToWishlist = (movie) =>
-  api.post('/auth/wishlist', { movie });
+export const addToWatchlist = (movie) =>
+  api.post('/auth/watchlist', { movie });
 
-export const removeFromWishlist = (movieId) =>
-  api.delete(`/auth/wishlist/${movieId}`);
+export const removeFromWatchlist = (movieId) =>
+  api.delete(`/auth/watchlist/${movieId}`);

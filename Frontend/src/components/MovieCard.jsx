@@ -6,20 +6,20 @@ const IMG_BASE = 'https://image.tmdb.org/t/p/w500';
 
 export default function MovieCard({ movie }) {
   const { id, title, poster_path, vote_average, release_date } = movie;
-  const { user, addToWishlist, removeFromWishlist } = useAuth();
+  const { user, addToWatchlist, removeFromWatchlist } = useAuth();
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
   const year = release_date ? release_date.split('-')[0] : 'N/A';
   const rating = vote_average ? vote_average.toFixed(1) : 'N/A';
   const productionCompany = movie.production_companies?.[0];
   const productionCompanyLogoUrl = productionCompany?.logo_path ? `${IMG_BASE}${productionCompany.logo_path}` : null;
-  const isInWishlist = Boolean(
-    user?.wishlist?.some((entry) =>
+  const isInWatchlist = Boolean(
+    user?.watchlist?.some((entry) =>
       typeof entry === 'number' ? entry === id : entry?.id === id
     )
   );
 
-  const handleWishlistClick = async (event) => {
+  const handleWatchlistClick = async (event) => {
     event.stopPropagation();
     event.preventDefault();
 
@@ -30,10 +30,10 @@ export default function MovieCard({ movie }) {
 
     setSaving(true);
     try {
-      if (isInWishlist) {
-        await removeFromWishlist(id);
+      if (isInWatchlist) {
+        await removeFromWatchlist(id);
       } else {
-        await addToWishlist(movie);
+        await addToWatchlist(movie);
       }
     } finally {
       setSaving(false);
@@ -114,11 +114,11 @@ export default function MovieCard({ movie }) {
 
       <button
         type="button"
-        onClick={handleWishlistClick}
+        onClick={handleWatchlistClick}
         disabled={saving}
-        aria-label={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+        aria-label={isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
         className={`absolute top-4 right-4 z-20 rounded-full p-2 transition-all duration-200 focus:outline-none
-                    ${isInWishlist
+                    ${isInWatchlist
                       ? 'bg-red-500/15 text-red-400 hover:bg-red-500/25 border border-red-400/30'
                       : 'bg-dark/80 text-white hover:bg-primary/90 border border-white/10'
                     }`}
@@ -133,7 +133,7 @@ export default function MovieCard({ movie }) {
                     C13.09 3.81 14.76 3 16.5 3
                     19.58 3 22 5.42 22 8.5
                     c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-            className={isInWishlist ? '' : 'fill-none stroke-current stroke-2'}
+            className={isInWatchlist ? '' : 'fill-none stroke-current stroke-2'}
           />
         </svg>
       </button>

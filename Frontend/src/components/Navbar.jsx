@@ -55,7 +55,7 @@ export default function Navbar() {
           <Link to="/" className="hover:text-primary transition-colors">Home</Link>
           {user ? (
             <>
-              <Link to="/wishlist" className="hover:text-primary transition-colors">Wishlist</Link>
+              <Link to="/watchlist" className="hover:text-primary transition-colors">Watchlist</Link>
               <Link to="/profile" className="hover:text-primary transition-colors">Profile</Link>
               <button
                 onClick={async () => {

@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
-    wishlist: {
+    watchlist: {
       type: [mongoose.Schema.Types.Mixed],
       default: [],
     },

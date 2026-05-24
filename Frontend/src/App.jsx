@@ -5,7 +5,7 @@ import MovieDetailPage from './pages/MovieDetail';
 import LoginPage from './pages/Login';
 import SignupPage from './pages/Signup';
 import ProfilePage from './pages/Profile';
-import WishlistPage from './pages/Wishlist';
+import WatchlistPage from './pages/Watchlist';
 import { AuthProvider } from './contexts/AuthContext';
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/watchlist" element={<WatchlistPage />} />
         </Routes>
       </div>
     </AuthProvider>

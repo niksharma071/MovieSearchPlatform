@@ -4,8 +4,8 @@ import {
   logoutUser,
   loginUser,
   signupUser,
-  addToWishlist as apiAddToWishlist,
-  removeFromWishlist as apiRemoveFromWishlist,
+  addToWatchlist as apiAddToWatchlist,
+  removeFromWatchlist as apiRemoveFromWatchlist,
 } from '../services/api';
 
 const AuthContext = createContext();
@@ -42,20 +42,20 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const addToWishlist = async (movie) => {
-    const response = await apiAddToWishlist(movie);
-    setUser((prev) => (prev ? { ...prev, wishlist: response.data.data.wishlist } : prev));
+  const addToWatchlist = async (movie) => {
+    const response = await apiAddToWatchlist(movie);
+    setUser((prev) => (prev ? { ...prev, watchlist: response.data.data.watchlist } : prev));
     return response;
   };
 
-  const removeFromWishlist = async (movieId) => {
-    const response = await apiRemoveFromWishlist(movieId);
-    setUser((prev) => (prev ? { ...prev, wishlist: response.data.data.wishlist } : prev));
+  const removeFromWatchlist = async (movieId) => {
+    const response = await apiRemoveFromWatchlist(movieId);
+    setUser((prev) => (prev ? { ...prev, watchlist: response.data.data.watchlist } : prev));
     return response;
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout, addToWishlist, removeFromWishlist }}>
+    <AuthContext.Provider value={{ user, loading, login, signup, logout, addToWatchlist, removeFromWatchlist }}>
       {children}
     </AuthContext.Provider>
   );

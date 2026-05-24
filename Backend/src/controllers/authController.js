@@ -23,7 +23,7 @@ const sendTokenResponse = (user, statusCode, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
-      wishlist: user.wishlist || [],
+      watchlist: user.watchlist || [],
     },
   });
 };
@@ -85,7 +85,7 @@ export const getCurrentUser = (req, res) => {
       id: req.user._id,
       name: req.user.name,
       email: req.user.email,
-      wishlist: req.user.wishlist || [],
+      watchlist: req.user.watchlist || [],
     },
   });
 };

@@ -11,7 +11,7 @@ export default function MovieDetailPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
-  const { user, addToWishlist, removeFromWishlist } = useAuth();
+  const { user, addToWatchlist, removeFromWatchlist } = useAuth();
 
   useEffect(() => {
     getMovieById(id)
@@ -20,13 +20,13 @@ export default function MovieDetailPage() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  const isInWishlist = Boolean(
-    user?.wishlist?.some((entry) =>
+  const isInWatchlist = Boolean(
+    user?.watchlist?.some((entry) =>
       typeof entry === 'number' ? entry === Number(id) : entry?.id === Number(id)
     )
   );
 
-  const handleWishlistClick = async () => {
+  const handleWatchlistClick = async () => {
     if (!user) {
       navigate('/login');
       return;
@@ -34,10 +34,10 @@ export default function MovieDetailPage() {
 
     setSaving(true);
     try {
-      if (isWishlisted) {
-        await removeFromWishlist(Number(id));
+      if (isInWatchlist) {
+        await removeFromWatchlist(Number(id));
       } else {
-        await addToWishlist(movie);
+        await addToWatchlist(movie);
       }
     } finally {
       setSaving(false);
@@ -78,15 +78,15 @@ export default function MovieDetailPage() {
             </div>
             <button
               type="button"
-              onClick={handleWishlistClick}
+              onClick={handleWatchlistClick}
               disabled={saving}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition-all focus:outline-none
-                ${isInWishlist
+                ${isInWatchlist
                   ? 'bg-red-500/15 text-red-400 border border-red-400/30 hover:bg-red-500/25'
                   : 'bg-primary text-dark hover:bg-primary/90'
                 }`}
             >
-              {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+              {isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
             </button>
           </div>
 

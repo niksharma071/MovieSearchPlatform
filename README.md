@@ -1,13 +1,13 @@
 # TMDB Full-Stack Movie Discovery Platform
 
 ## Overview
-This project is a full-stack Movie Discovery Platform powered by The Movie Database (TMDB) API. It was built for the Akrisso Code Challenge Assessment. The application allows users to browse popular movies, search by title, view detailed movie information (including cast and trailers), and manage a personal wishlist.
+This project is a full-stack Movie Discovery Platform powered by The Movie Database (TMDB) API. It was built for the Akrisso Code Challenge Assessment. The application allows users to browse popular movies, search by title, view detailed movie information (including cast and trailers), and manage a personal watchlist.
 
 ## Features Implemented
 * **Backend API Gateway:** A centralized Node.js/Express server that securely handles all external requests to the TMDB API.
 * **Frontend Browse & Search:** A responsive React UI for exploring trending movies and searching the catalog.
 * **Movie Detail Page:** In-depth views displaying full movie details, genres, cast/crew, and similar recommendations.
-* **Wishlist (Persistence):** MongoDB integration allowing users to save and persist their favorite movies.
+* **Watchlist (Persistence):** MongoDB integration allowing users to save and persist their favorite movies.
 * **Auth & User Sessions:** Secure login, signup, and logout functionality using JWT and HTTP-only cookies.
 
 ## Tech Stack
@@ -105,10 +105,10 @@ The Node.js backend acts as a gateway to the TMDB API, protecting the access tok
 | `POST` | `/api/auth/login` | Authenticates a user and issues a token |
 | `GET` | `/api/auth/me` | Retrieves the current authenticated user |
 | `POST` | `/api/auth/logout` | Logs out the current user |
-| **Wishlist Routes** (Protected) | | |
-| `GET` | `/api/auth/wishlist` | Gets the authenticated user's wishlist |
-| `POST` | `/api/auth/wishlist` | Adds a movie to the user's wishlist |
-| `DELETE`| `/api/auth/wishlist/:movieId`| Removes a movie from the user's wishlist |
+| **Watchlist Routes** (Protected) | | |
+| `GET` | `/api/auth/watchlist` | Gets the authenticated user's watchlist |
+| `POST` | `/api/auth/watchlist` | Adds a movie to the user's watchlist |
+| `DELETE`| `/api/auth/watchlist/:movieId`| Removes a movie from the user's watchlist |
 | **System** | | |
 | `GET` | `/api/health` | Server health check endpoint |
 

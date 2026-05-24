@@ -1,15 +1,15 @@
 import tmdb from '../config/tmdb.js';
 import User from '../models/User.js';
 
-export const getWishlist = async (req, res, next) => {
+export const getWatchlist = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).select('wishlist');
+    const user = await User.findById(req.user._id).select('watchlist');
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
     const movies = await Promise.all(
-      user.wishlist.map(async (entry) => {
+      user.watchlist.map(async (entry) => {
         if (typeof entry === 'number') {
           try {
             const response = await tmdb.get(`/movie/${entry}`);
@@ -32,7 +32,7 @@ export const getWishlist = async (req, res, next) => {
   }
 };
 
-export const addToWishlist = async (req, res, next) => {
+export const addToWatchlist = async (req, res, next) => {
   try {
     const movie = req.body.movie;
     const movieId = Number(req.body.movieId || movie?.id);
@@ -46,29 +46,29 @@ export const addToWishlist = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    const alreadyExists = user.wishlist.some((entry) => {
+    const alreadyExists = user.watchlist.some((entry) => {
       if (typeof entry === 'number') return entry === movieId;
       return entry?.id === movieId;
     });
 
     if (alreadyExists) {
-      return res.status(409).json({ success: false, message: 'Movie already in wishlist' });
+      return res.status(409).json({ success: false, message: 'Movie already in watchlist' });
     }
 
-    const wishlistEntry = typeof movie === 'object' && movie !== null ? movie : { id: movieId };
+    const watchlistEntry = typeof movie === 'object' && movie !== null ? movie : { id: movieId };
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
-      { $push: { wishlist: wishlistEntry } },
+      { $push: { watchlist: watchlistEntry } },
       { new: true }
     );
 
-    res.status(200).json({ success: true, data: { wishlist: updatedUser.wishlist } });
+    res.status(200).json({ success: true, data: { watchlist: updatedUser.watchlist } });
   } catch (err) {
     next(err);
   }
 };
 
-export const removeFromWishlist = async (req, res, next) => {
+export const removeFromWatchlist = async (req, res, next) => {
   try {
     const movieId = Number(req.params.movieId);
     if (!movieId) {
@@ -77,13 +77,13 @@ export const removeFromWishlist = async (req, res, next) => {
 
     let updatedUser = await User.findByIdAndUpdate(
       req.user._id,
-      { $pull: { wishlist: movieId } },
+      { $pull: { watchlist: movieId } },
       { new: true }
     );
 
     updatedUser = await User.findByIdAndUpdate(
       req.user._id,
-      { $pull: { wishlist: { id: movieId } } },
+      { $pull: { watchlist: { id: movieId } } },
       { new: true }
     );
 
@@ -91,7 +91,7 @@ export const removeFromWishlist = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    res.status(200).json({ success: true, data: { wishlist: updatedUser.wishlist } });
+    res.status(200).json({ success: true, data: { watchlist: updatedUser.watchlist } });
   } catch (err) {
     next(err);
   }
