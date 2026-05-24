@@ -112,5 +112,14 @@ The Node.js backend acts as a gateway to the TMDB API, protecting the access tok
 | **System** | | |
 | `GET` | `/api/health` | Server health check endpoint |
 
+
+## Architecture & Trade-offs Note
+For the architectural design, I implemented a Backend-for-Frontend (BFF) pattern using Node.js and Express. This acts as a secure API Gateway to mask the TMDB Bearer token, ensuring client-side security while formatting the TMDB payload specifically for the React frontend's needs. 
+
+For frontend state management, I relied on standard React state. By carefully structuring component hierarchies, I managed prop-drilling effectively without introducing the unnecessary boilerplate and overhead of external state libraries like Redux. 
+
+For data persistence and user sessions, I utilized MongoDB and JWT stored in HTTP-only cookies for enhanced security against XSS attacks. A primary architectural trade-off was deciding how to store the wishlist data. Instead of just saving TMDB movie IDs, I chose to embed the entire movie object directly inside the user's database array. While this increases the database document size and risks slight data staleness if TMDB updates a movie's details, it drastically optimizes read performance. Rendering the user's wishlist requires zero additional external API calls to TMDB, resulting in a significantly faster and smoother user experience.
+
+
 ---
 **Author:** Nikhil Sharma
